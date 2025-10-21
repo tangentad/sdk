@@ -48,6 +48,14 @@ export class SoulCypherSDK {
   }
 
   /**
+   * Update an existing avatar
+   * Only the creator project can update the avatar
+   */
+  async updateAvatar(avatarId: string, avatarData: Partial<CreateAvatarRequest>): Promise<Avatar> {
+    return this.apiClient.updateAvatar(avatarId, avatarData);
+  }
+
+  /**
    * Set avatar marketplace visibility
    * Only the creator project can change visibility
    */

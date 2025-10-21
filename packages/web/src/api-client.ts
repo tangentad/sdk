@@ -231,6 +231,51 @@ export class APIClient {
     });
   }
 
+  /**
+   * Update an existing avatar
+   *
+   * @param avatarId - ID of the avatar to update
+   * @param request - Avatar update request (all fields optional except avatarId)
+   * @param request.audioFiles - Optional: Array of audio files for voice update
+   * @param request.image - Optional: Image file for Hedra avatar update
+   * @returns Promise resolving to the updated avatar
+   */
+  async updateAvatar(avatarId: string, request: Partial<CreateAvatarRequest> & { avatarId?: never }): Promise<Avatar> {
+    // Create FormData for multipart upload
+    const formData = new FormData();
+
+    // Add text fields (only if provided)
+    if (request.name !== undefined) formData.append("name", request.name);
+    if (request.description !== undefined) formData.append("description", request.description);
+    if (request.systemPrompt !== undefined) formData.append("systemPrompt", request.systemPrompt);
+
+    // Add complex objects as JSON strings (only if provided)
+    if (request.personality !== undefined) {
+      formData.append("personality", JSON.stringify(request.personality));
+    }
+    if (request.meta !== undefined) {
+      formData.append("meta", JSON.stringify(request.meta));
+    }
+
+    // Add image file (optional for updates)
+    if (request.image) {
+      formData.append("image", request.image);
+    }
+
+    // Add audio files (optional for updates)
+    if (request.audioFiles && request.audioFiles.length > 0) {
+      request.audioFiles.forEach((audioFile) => {
+        formData.append("audio", audioFile);
+      });
+    }
+
+    // Make PATCH request
+    return this.requestFormData<Avatar>(`/avatars/${avatarId}`, {
+      method: "PATCH",
+      body: formData,
+    });
+  }
+
   async setAvatarVisibility(avatarId: string, marketplace: boolean): Promise<{ id: string; name: string; marketplace: boolean }> {
     return this.request<{ id: string; name: string; marketplace: boolean }>(`/avatars/${avatarId}/visibility`, {
       method: 'POST',
