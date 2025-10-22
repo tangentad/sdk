@@ -64,6 +64,53 @@ export class SoulCypherSDK {
   }
 
   /**
+   * Delete an avatar
+   * Only the creator project can delete the avatar
+   */
+  async deleteAvatar(avatarId: string): Promise<void> {
+    return this.apiClient.deleteAvatar(avatarId);
+  }
+
+  /**
+   * Get all knowledge items for an avatar
+   */
+  async getAvatarKnowledge(avatarId: string): Promise<any[]> {
+    return this.apiClient.getAvatarKnowledge(avatarId);
+  }
+
+  /**
+   * Add knowledge to an avatar from text or file
+   *
+   * @param avatarId - ID of the avatar
+   * @param data - Knowledge data (text, file, or both)
+   * @param data.text - Optional: Text content to add
+   * @param data.file - Optional: File to upload (PDF, TXT, etc.)
+   * @param data.title - Optional: Title for the knowledge item
+   */
+  async addAvatarKnowledge(avatarId: string, data: { text?: string; file?: File; title?: string }): Promise<any> {
+    const formData = new FormData();
+
+    if (data.text) {
+      formData.append('text', data.text);
+    }
+    if (data.file) {
+      formData.append('file', data.file);
+    }
+    if (data.title) {
+      formData.append('title', data.title);
+    }
+
+    return this.apiClient.addAvatarKnowledge(avatarId, formData);
+  }
+
+  /**
+   * Delete a knowledge item from an avatar
+   */
+  async deleteAvatarKnowledge(avatarId: string, knowledgeId: string): Promise<void> {
+    return this.apiClient.deleteAvatarKnowledge(avatarId, knowledgeId);
+  }
+
+  /**
    * Create a new avatar session
    */
   async createSession(

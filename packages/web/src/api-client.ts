@@ -283,6 +283,30 @@ export class APIClient {
     });
   }
 
+  async deleteAvatar(avatarId: string): Promise<void> {
+    await this.request<void>(`/avatars/${avatarId}`, {
+      method: 'DELETE',
+    });
+  }
+
+  // Knowledge base operations
+  async getAvatarKnowledge(avatarId: string): Promise<any[]> {
+    return this.request<any[]>(`/avatars/${avatarId}/knowledge`);
+  }
+
+  async addAvatarKnowledge(avatarId: string, formData: FormData): Promise<any> {
+    return this.requestFormData<any>(`/avatars/${avatarId}/knowledge`, {
+      method: 'POST',
+      body: formData,
+    });
+  }
+
+  async deleteAvatarKnowledge(avatarId: string, knowledgeId: string): Promise<void> {
+    await this.request<void>(`/avatars/${avatarId}/knowledge/${knowledgeId}`, {
+      method: 'DELETE',
+    });
+  }
+
   // Session operations
   async createSession(request: CreateSessionRequest): Promise<AvatarSession> {
     return this.request<AvatarSession>("/sessions/create", {
