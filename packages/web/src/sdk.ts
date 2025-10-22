@@ -90,12 +90,17 @@ export class SoulCypherSDK {
   async addAvatarKnowledge(avatarId: string, data: { text?: string; file?: File; title?: string }): Promise<any> {
     const formData = new FormData();
 
-    if (data.text) {
-      formData.append('text', data.text);
-    }
+    // Determine sourceType based on what's provided
     if (data.file) {
+      formData.append('sourceType', 'file');
       formData.append('file', data.file);
+    } else if (data.text) {
+      formData.append('sourceType', 'text');
+      formData.append('content', data.text); // Backend expects 'content' for text
+    } else {
+      throw new Error('Either text or file must be provided');
     }
+
     if (data.title) {
       formData.append('title', data.title);
     }
