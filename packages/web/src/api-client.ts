@@ -48,6 +48,11 @@ export class APIClient {
         await this.handleErrorResponse(response);
       }
 
+      // Handle empty responses (204 No Content)
+      if (response.status === 204 || response.headers.get('content-length') === '0') {
+        return {} as T;
+      }
+
       return response.json();
     } catch (error) {
       if (error instanceof SoulCypherError) {
@@ -84,6 +89,11 @@ export class APIClient {
 
       if (!response.ok) {
         await this.handleErrorResponse(response);
+      }
+
+      // Handle empty responses (204 No Content)
+      if (response.status === 204 || response.headers.get('content-length') === '0') {
+        return {} as T;
       }
 
       return response.json();
