@@ -170,6 +170,18 @@ export class SoulCypherSDK {
   }
 
   /**
+   * Get conversation history for a user and avatar
+   */
+  async getConversations(params: {
+    userId: string;
+    avatarId: string;
+    limit?: number;
+    offset?: number;
+  }): Promise<any[]> {
+    return this.apiClient.getConversations(params);
+  }
+
+  /**
    * Get all active sessions
    */
   getActiveSessions(): AvatarSessionManager[] {

@@ -349,6 +349,23 @@ export class APIClient {
     });
   }
 
+  // Conversation operations
+  async getConversations(params: {
+    userId: string;
+    avatarId: string;
+    limit?: number;
+    offset?: number;
+  }): Promise<any[]> {
+    const queryParams = new URLSearchParams({
+      userId: params.userId,
+      avatarId: params.avatarId,
+      limit: (params.limit || 50).toString(),
+      offset: (params.offset || 0).toString(),
+    });
+
+    return this.request<any[]>(`/conversations?${queryParams.toString()}`);
+  }
+
   // Health check (mounted at root level, not under /v1)
   async ping(): Promise<{ status: string; timestamp: string }> {
     const url = `${this.baseUrl}/health`;
