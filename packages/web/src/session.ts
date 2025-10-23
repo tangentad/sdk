@@ -117,6 +117,29 @@ export class AvatarSessionManager {
   }
 
   /**
+   * Get the session ID
+   */
+  getSessionId(): string {
+    return this.session.id;
+  }
+
+  /**
+   * Get the underlying session data
+   * Useful for passing session details to other systems
+   */
+  getSessionData(): AvatarSession {
+    return this.session;
+  }
+
+  /**
+   * Convert session to JSON-serializable format
+   * Automatically called by JSON.stringify()
+   */
+  toJSON(): AvatarSession {
+    return this.session;
+  }
+
+  /**
    * Add event listener
    */
   on(event: string, handler: Function): void {
