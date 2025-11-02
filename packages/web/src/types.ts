@@ -123,6 +123,47 @@ export interface UsageMetrics {
   endedAt: string;
 }
 
+// Affiliate Product types
+export interface AffiliateProduct {
+  id: string;
+  avatarId: string;
+  name: string;
+  description: string;
+  category: string;
+  affiliateUrl: string;
+  imageUrl?: string;
+  price?: string;
+  keywords: string[];
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+  _count?: {
+    clicks: number;
+  };
+}
+
+export interface CreateAffiliateProductRequest {
+  name: string;
+  description: string;
+  category: string;
+  affiliateUrl: string;
+  imageUrl?: string;
+  price?: string;
+  keywords?: string[];
+  isActive?: boolean;
+}
+
+export interface UpdateAffiliateProductRequest {
+  name?: string;
+  description?: string;
+  category?: string;
+  affiliateUrl?: string;
+  imageUrl?: string;
+  price?: string;
+  keywords?: string[];
+  isActive?: boolean;
+}
+
 // Error types
 export class SoulCypherError extends Error {
   constructor(

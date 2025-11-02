@@ -201,6 +201,53 @@ export class SoulCypherSDK {
   }
 
   /**
+   * Get affiliate products for an avatar
+   */
+  async getAffiliateProducts(avatarId: string, includeInactive: boolean = false) {
+    return this.apiClient.getAffiliateProducts(avatarId, includeInactive);
+  }
+
+  /**
+   * Get a single affiliate product by ID
+   */
+  async getAffiliateProduct(productId: string) {
+    return this.apiClient.getAffiliateProduct(productId);
+  }
+
+  /**
+   * Create a new affiliate product for an avatar
+   */
+  async createAffiliateProduct(avatarId: string, productData: any) {
+    return this.apiClient.createAffiliateProduct(avatarId, productData);
+  }
+
+  /**
+   * Update an existing affiliate product
+   */
+  async updateAffiliateProduct(productId: string, updates: any) {
+    return this.apiClient.updateAffiliateProduct(productId, updates);
+  }
+
+  /**
+   * Delete an affiliate product
+   */
+  async deleteAffiliateProduct(productId: string) {
+    return this.apiClient.deleteAffiliateProduct(productId);
+  }
+
+  /**
+   * Track an affiliate product click
+   */
+  async trackAffiliateClick(productId: string, clickData: {
+    userId?: string;
+    sessionId: string;
+    userQuery: string;
+    avatarResponse: string;
+  }) {
+    return this.apiClient.trackAffiliateClick(productId, clickData);
+  }
+
+  /**
    * Test API connectivity
    */
   async ping(): Promise<boolean> {

@@ -8,6 +8,9 @@ import {
   AvatarSession,
   CreateSessionRequest,
   CreateAvatarRequest,
+  AffiliateProduct,
+  CreateAffiliateProductRequest,
+  UpdateAffiliateProductRequest,
   SoulCypherError,
   AuthenticationError,
   RateLimitError,
@@ -364,6 +367,72 @@ export class APIClient {
     });
 
     return this.request<any[]>(`/conversations?${queryParams.toString()}`);
+  }
+
+  // Affiliate product operations
+  async getAffiliateProducts(avatarId: string, includeInactive: boolean = false): Promise<AffiliateProduct[]> {
+    const queryParams = includeInactive ? '?includeInactive=true' : '';
+    const response = await this.request<{ success: boolean; data: AffiliateProduct[] }>(
+      `/avatars/${avatarId}/affiliate-products${queryParams}`
+    );
+    return response.data;
+  }
+
+  async getAffiliateProduct(productId: string): Promise<AffiliateProduct> {
+    const response = await this.request<{ success: boolean; data: AffiliateProduct }>(
+      `/affiliate-products/${productId}`
+    );
+    return response.data;
+  }
+
+  async createAffiliateProduct(
+    avatarId: string,
+    productData: CreateAffiliateProductRequest
+  ): Promise<AffiliateProduct> {
+    const response = await this.request<{ success: boolean; data: AffiliateProduct }>(
+      `/avatars/${avatarId}/affiliate-products`,
+      {
+        method: 'POST',
+        body: JSON.stringify(productData),
+      }
+    );
+    return response.data;
+  }
+
+  async updateAffiliateProduct(
+    productId: string,
+    updates: UpdateAffiliateProductRequest
+  ): Promise<AffiliateProduct> {
+    const response = await this.request<{ success: boolean; data: AffiliateProduct }>(
+      `/affiliate-products/${productId}`,
+      {
+        method: 'PUT',
+        body: JSON.stringify(updates),
+      }
+    );
+    return response.data;
+  }
+
+  async deleteAffiliateProduct(productId: string): Promise<void> {
+    await this.request<void>(`/affiliate-products/${productId}`, {
+      method: 'DELETE',
+    });
+  }
+
+  async trackAffiliateClick(productId: string, clickData: {
+    userId?: string;
+    sessionId: string;
+    userQuery: string;
+    avatarResponse: string;
+  }): Promise<{ clickId: string; clickedAt: string }> {
+    const response = await this.request<{ success: boolean; data: { clickId: string; clickedAt: string } }>(
+      `/affiliate-products/${productId}/click`,
+      {
+        method: 'POST',
+        body: JSON.stringify(clickData),
+      }
+    );
+    return response.data;
   }
 
   // Health check (mounted at root level, not under /v1)
