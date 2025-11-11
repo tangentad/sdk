@@ -27,6 +27,7 @@ export class AvatarSessionManager {
   room: Room | null = null;
   session: AvatarSession;
   eventHandlers: Map<string, Function[]> = new Map();
+  private audioPlaybackBlocked = false;
 
   constructor(session: AvatarSession) {
     this.session = session;
@@ -79,6 +80,11 @@ export class AvatarSessionManager {
       throw new SessionError("Not connected to session");
     }
 
+    // Auto-resume audio on first user interaction (sending a message)
+    if (this.audioPlaybackBlocked) {
+      await this.resumeAudio();
+    }
+
     try {
       await this.room.localParticipant.publishData(
         new TextEncoder().encode(
@@ -99,6 +105,25 @@ export class AvatarSessionManager {
   }
 
   /**
+   * Resume audio playback (call from user interaction if blocked)
+   * This is called automatically on sendMessage, but can also be called manually
+   */
+  async resumeAudio(): Promise<void> {
+    if (!this.room) {
+      throw new SessionError("Not connected to session");
+    }
+
+    try {
+      await this.room.startAudio();
+      this.audioPlaybackBlocked = false;
+      console.log('[SDK] Audio playback resumed successfully');
+    } catch (error) {
+      console.warn('[SDK] Failed to resume audio:', error);
+      // Don't throw - audio might already be playing
+    }
+  }
+
+  /**
    * Get current session status
    */
   getStatus(): "connected" | "connecting" | "disconnected" | "error" {
@@ -114,6 +139,13 @@ export class AvatarSessionManager {
       default:
         return "error";
     }
+  }
+
+  /**
+   * Check if audio playback is blocked by browser autoplay policy
+   */
+  isAudioBlocked(): boolean {
+    return this.audioPlaybackBlocked;
   }
 
   /**
@@ -214,6 +246,18 @@ export class AvatarSessionManager {
 
     this.room.on(RoomEvent.ConnectionQualityChanged, (quality, participant) => {
       this.emitEvent(CONNECTION_EVENTS.QUALITY, { quality, participant });
+    });
+
+    // Handle browser autoplay policy
+    this.room.on(RoomEvent.AudioPlaybackStatusChanged, () => {
+      const canPlay = this.room?.canPlaybackAudio ?? false;
+      this.audioPlaybackBlocked = !canPlay;
+
+      if (!canPlay) {
+        console.log('[SDK] Audio playback blocked by browser. Will auto-resume on user interaction.');
+      } else {
+        console.log('[SDK] Audio playback enabled');
+      }
     });
   }
 
