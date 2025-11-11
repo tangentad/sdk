@@ -1,6 +1,6 @@
 {
   "name": "@soulcypher/twin-sdk",
-  "version": "0.1.11",
+  "version": "0.2.0",
   "description": "Official SDK for SoulCypher Twin OS",
   "main": "packages/web/dist/index.js",
   "types": "packages/web/dist/index.d.ts",
