@@ -171,39 +171,9 @@ export class APIClient {
   }
 
   /**
-   * Create a new avatar with required file uploads
-   *
-   * @param request - Avatar creation request with files
-   * @param request.audioFiles - Required: Array of audio files for voice creation (all providers)
-   * @param request.image - Required for Hedra provider: Image file for avatar
-   * @returns Promise resolving to the created avatar with voiceId
+   * Create a new avatar with file uploads
    */
   async createAvatar(request: CreateAvatarRequest): Promise<Avatar> {
-    // Validate required files
-    if (!request.audioFiles || request.audioFiles.length === 0) {
-      throw new SoulCypherError(
-        "Audio files are required for voice creation",
-        "VALIDATION_ERROR",
-        400
-      );
-    }
-
-    if (request.provider === "hedra" && !request.image) {
-      throw new SoulCypherError(
-        "Image file is required for Hedra avatars",
-        "VALIDATION_ERROR",
-        400
-      );
-    }
-
-    if (request.provider === "rpm" && !request.rpmModelUrl) {
-      throw new SoulCypherError(
-        "RPM model URL is required for animated avatars",
-        "VALIDATION_ERROR",
-        400
-      );
-    }
-
     // Create FormData for multipart upload
     const formData = new FormData();
 
