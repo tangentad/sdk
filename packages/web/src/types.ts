@@ -76,6 +76,7 @@ export interface Avatar {
 export interface CreateSessionRequest {
   avatarId: string;
   userId: string;
+  mode?: ConversationMode; // Optional conversation mode (defaults to avatar's defaultMode)
   metadata?: {
     sessionName?: string;
     customContext?: string;

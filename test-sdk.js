@@ -3,7 +3,7 @@
  */
 
 const {
-  SoulCypherSDK,
+  TangentSDK,
   AVATAR_PROVIDERS,
   SESSION_EVENTS,
   AVATAR_EVENTS,
@@ -70,7 +70,7 @@ class TestRunner {
 }
 
 async function runFullTestSuite() {
-  console.log('🚀 Comprehensive SoulCypher SDK Test Suite\n');
+  console.log('🚀 Comprehensive TangentAd SDK Test Suite\n');
 
   const test = new TestRunner();
   let sdk, avatars, sessionManager;
@@ -80,8 +80,8 @@ async function runFullTestSuite() {
 
   test.test('AVATAR_PROVIDERS constants exist', () => {
     return AVATAR_PROVIDERS &&
-           AVATAR_PROVIDERS.RPM === 'RPM' &&
-           AVATAR_PROVIDERS.HEDRA === 'Hedra';
+           AVATAR_PROVIDERS.RPM === 'rpm' &&
+           AVATAR_PROVIDERS.HEDRA === 'hedra';
   });
 
   test.test('SESSION_EVENTS constants exist', () => {
@@ -94,7 +94,7 @@ async function runFullTestSuite() {
     return AVATAR_EVENTS &&
            AVATAR_EVENTS.VIDEO === 'avatar.video' &&
            AVATAR_EVENTS.AUDIO === 'avatar.audio' &&
-           AVATAR_EVENTS.MESSAGE === 'avatar.message';
+           AVATAR_EVENTS.RESPONSE === 'avatar.response';
   });
 
   test.test('CONNECTION_EVENTS constants exist', () => {
@@ -114,16 +114,16 @@ async function runFullTestSuite() {
   console.log('🔧 Testing SDK Initialization...');
 
   test.test('SDK initialization with valid config', () => {
-    sdk = new SoulCypherSDK({
+    sdk = new TangentSDK({
       apiKey: 'sk_test_3ZjoVEbdqvVvkPTEjptnk2VT',
       baseUrl: 'http://localhost:4000'
     });
-    return sdk instanceof SoulCypherSDK;
+    return sdk instanceof TangentSDK;
   });
 
   test.test('SDK throws error without API key', () => {
     try {
-      new SoulCypherSDK({});
+      new TangentSDK({});
       return false;
     } catch (error) {
       return error instanceof AuthenticationError;
@@ -238,7 +238,7 @@ async function runFullTestSuite() {
   console.log('⚠️ Testing Error Handling...');
 
   await test.asyncTest('Invalid API key handling', async () => {
-    const badSdk = new SoulCypherSDK({
+    const badSdk = new TangentSDK({
       apiKey: 'invalid-key',
       baseUrl: 'http://localhost:4000'
     });
