@@ -4,6 +4,7 @@
 
 import type {
   AvatarProvider,
+  ConversationMode,
   SessionEventType,
   SessionStatus,
   SDKEnvironment,
@@ -13,6 +14,7 @@ import type {
 // Re-export the types
 export type {
   AvatarProvider,
+  ConversationMode,
   SessionEventType,
   SessionStatus,
   SDKEnvironment,
@@ -30,12 +32,28 @@ export interface Avatar {
   slug: string;
   name: string;
   description?: string;
+  systemPrompt?: string;
+  personality?: {
+    tone?: string;
+    communicationStyle?: string;
+    responseLength?: string;
+    expertise?: string[];
+  };
   category?: string;
   imageUrl?: string;
   previewVideoUrl?: string;
-  provider: AvatarProvider;
+
+  // Conversation mode fields (NEW)
+  supportedModes: ConversationMode[];
+  defaultMode: ConversationMode;
+  has3dAvatar: boolean;
+  hasVideoAvatar: boolean;
+
+  // Provider info (derived from capabilities, can be null for text-only)
+  provider: AvatarProvider | null;
   voiceId?: string; // ElevenLabs voice ID
-  costPerMinute: number;
+
+  costPerMinute?: number;
   isActive: boolean;
   marketplace?: boolean;
   isOwned?: boolean; // Whether the requesting project owns this avatar
@@ -52,7 +70,7 @@ export interface Avatar {
   hedraConfig?: {
     id: string;
   };
-  modelUri?: string; // For RPM avatars
+  modelUri?: string; // For RPM 3D avatars (optional in voice mode)
 }
 
 export interface CreateSessionRequest {
@@ -75,17 +93,24 @@ export interface CreateAvatarRequest {
     responseLength?: string;
     expertise?: string[];
   };
-  provider?: AvatarProvider;
-  rpmModelUrl?: string; // Ready Player Me avatar model URL for RPM provider
+
+  // Conversation mode flags (NEW)
+  enableVoice?: boolean; // Default: false
+  enableVideo?: boolean; // Default: false
+
+  // Optional RPM model URL for 3D voice avatars
+  rpmModelUrl?: string;
+
   meta?: {
     source?: string;
     userId?: string;
     knowledgeText?: string;
     links?: string[];
   };
+
   // File uploads
-  image?: File | Blob; // Required for Hedra provider
-  audioFiles: File[] | Blob[]; // Required for all providers
+  image?: File | Blob; // Required only for video mode
+  audioFiles?: File[] | Blob[]; // Required for voice/video modes
 }
 
 export interface AvatarSession {

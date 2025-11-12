@@ -9,6 +9,7 @@ export { APIClient } from './api-client';
 // Export constants
 export {
   AVATAR_PROVIDERS,
+  CONVERSATION_MODES,
   SESSION_EVENTS,
   AVATAR_EVENTS,
   CONNECTION_EVENTS,
@@ -29,6 +30,7 @@ export type {
   SessionEventData,
   UsageMetrics,
   AvatarProvider,
+  ConversationMode,
   SessionEventType,
   SessionStatus,
   SDKEnvironment,

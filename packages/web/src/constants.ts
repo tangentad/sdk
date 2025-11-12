@@ -11,6 +11,16 @@ export const AVATAR_PROVIDERS = {
 export type AvatarProvider =
   (typeof AVATAR_PROVIDERS)[keyof typeof AVATAR_PROVIDERS];
 
+// Conversation Mode Constants
+export const CONVERSATION_MODES = {
+  TEXT: "text",
+  VOICE: "voice",
+  VIDEO: "video",
+} as const;
+
+export type ConversationMode =
+  (typeof CONVERSATION_MODES)[keyof typeof CONVERSATION_MODES];
+
 // Session Event Types
 export const SESSION_EVENTS = {
   STARTED: "session.started",
