@@ -1,20 +1,20 @@
-# SoulCypher Avatar SDK
+# TangentAd SDK
 
-JavaScript/TypeScript SDK for integrating streaming AI avatars into your applications.
+JavaScript/TypeScript SDK for integrating streaming AI avatars into your applications. Turn AI conversations into revenue.
 
 ## Installation
 
 ```bash
-npm install @soulcypher/twin-sdk
+npm install @tangentad/sdk
 ```
 
 ## Quick Start
 
 ```typescript
 
-import { SoulCypherSDK, AvatarSessionManager, AVATAR_PROVIDERS } from '@soulcypher/twin-sdk';
+import { TangentSDK, AvatarSessionManager, AVATAR_PROVIDERS } from '@tangentad/sdk';
 
-const sdk = new SoulCypherSDK({
+const sdk = new TangentSDK({
   apiKey: "your-api-key",
 });
 
@@ -147,5 +147,5 @@ MIT License
 
 ## Support
 
-- [Documentation](https://docs.soulcypher.ai)
-- [Report Issues](https://github.com/soulcypher/sdk/issues)
+- [Website](https://tangent.ad)
+- [Report Issues](https://github.com/tangentad/sdk/issues)

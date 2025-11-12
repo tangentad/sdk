@@ -1,8 +1,8 @@
 /**
- * SoulCypher Avatar SDK - Main Export
+ * TangentAd SDK - Main Export
  */
 
-export { SoulCypherSDK } from './sdk';
+export { TangentSDK } from './sdk';
 export { AvatarSessionManager } from './session';
 export { APIClient } from './api-client';
 

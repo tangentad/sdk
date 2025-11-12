@@ -251,12 +251,19 @@ export class AvatarSessionManager {
     // Handle browser autoplay policy
     this.room.on(RoomEvent.AudioPlaybackStatusChanged, () => {
       const canPlay = this.room?.canPlaybackAudio ?? false;
+      const wasBlocked = this.audioPlaybackBlocked;
       this.audioPlaybackBlocked = !canPlay;
 
       if (!canPlay) {
         console.log('[SDK] Audio playback blocked by browser. Will auto-resume on user interaction.');
+        if (!wasBlocked) {
+          this.emitEvent(AVATAR_EVENTS.AUDIO_BLOCKED, { blocked: true });
+        }
       } else {
         console.log('[SDK] Audio playback enabled');
+        if (wasBlocked) {
+          this.emitEvent(AVATAR_EVENTS.AUDIO_UNBLOCKED, { blocked: false });
+        }
       }
     });
   }

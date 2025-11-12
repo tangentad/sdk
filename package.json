@@ -1,7 +1,7 @@
 {
-  "name": "@soulcypher/twin-sdk",
+  "name": "@tangentad/sdk",
   "version": "0.2.0",
-  "description": "Official SDK for SoulCypher Twin OS",
+  "description": "Official SDK for TangentAd - Turn AI Conversations Into Revenue",
   "main": "packages/web/dist/index.js",
   "types": "packages/web/dist/index.d.ts",
   "scripts": {
@@ -14,16 +14,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/soulcypherai/sdk.git"
+    "url": "https://github.com/tangentad/sdk.git"
   },
   "keywords": [
     "twin",
     "ai",
     "video-chat",
     "sdk",
-    "soulcypher"
+    "avatar",
+    "tangentad"
   ],
-  "author": "SoulCypher AI",
+  "author": "TangentAd",
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^20.0.0",

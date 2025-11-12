@@ -1,5 +1,5 @@
 /**
- * Main SoulCypher Avatar SDK Class
+ * Main TangentAd SDK Class
  */
 
 import { APIClient } from "./api-client";
@@ -13,7 +13,7 @@ import {
   AuthenticationError,
 } from "./types";
 
-export class SoulCypherSDK {
+export class TangentSDK {
   private apiClient: APIClient;
   private sessions: Map<string, AvatarSessionManager> = new Map();
 

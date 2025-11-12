@@ -1,5 +1,5 @@
 /**
- * Core types for SoulCypher Avatar SDK
+ * Core types for TangentAd SDK
  */
 
 import type {

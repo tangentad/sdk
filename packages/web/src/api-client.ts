@@ -1,5 +1,5 @@
 /**
- * API Client for SoulCypher Platform Backend
+ * API Client for TangentAd Platform Backend
  */
 
 import {

@@ -22,6 +22,8 @@ export const SESSION_EVENTS = {
 export const AVATAR_EVENTS = {
   VIDEO: "avatar.video",
   AUDIO: "avatar.audio",
+  AUDIO_BLOCKED: "avatar.audio.blocked",
+  AUDIO_UNBLOCKED: "avatar.audio.unblocked",
   STATUS: "avatar.status",
   INPUT: "avatar.input",
   RESPONSE: "avatar.response",
