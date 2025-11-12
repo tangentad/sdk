@@ -1,6 +1,6 @@
 {
   "name": "@tangentad/sdk",
-  "version": "0.1.10",
+  "version": "0.1.0",
   "description": "Official JavaScript SDK for TangentAd - Turn AI Conversations Into Revenue",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
