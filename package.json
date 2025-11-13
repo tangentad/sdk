@@ -1,9 +1,16 @@
 {
   "name": "@tangentad/sdk",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Official SDK for TangentAd - Turn AI Conversations Into Revenue",
   "main": "packages/web/dist/index.js",
   "types": "packages/web/dist/index.d.ts",
+  "files": [
+    "packages/web/dist",
+    "packages/web/src",
+    "README.md",
+    "docs",
+    "examples"
+  ],
   "scripts": {
     "build": "npm run build:web && npm run build:rn",
     "build:web": "cd packages/web && npm run build",
