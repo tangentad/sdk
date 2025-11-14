@@ -232,6 +232,11 @@ export class APIClient {
     if (request.description !== undefined) formData.append("description", request.description);
     if (request.systemPrompt !== undefined) formData.append("systemPrompt", request.systemPrompt);
 
+    // Add conversation mode flags (only if provided)
+    if (request.enableVoice !== undefined) formData.append("enableVoice", String(request.enableVoice));
+    if (request.enableVideo !== undefined) formData.append("enableVideo", String(request.enableVideo));
+    if (request.rpmModelUrl !== undefined) formData.append("rpmModelUrl", request.rpmModelUrl);
+
     // Add complex objects as JSON strings (only if provided)
     if (request.personality !== undefined) {
       formData.append("personality", JSON.stringify(request.personality));
