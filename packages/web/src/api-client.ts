@@ -344,6 +344,22 @@ export class APIClient {
     return this.request<any[]>(`/conversations?${queryParams.toString()}`);
   }
 
+  async mergeAnonymousSession(params: {
+    anonymousUserId: string;
+    authenticatedUserId: string;
+  }): Promise<{ success: boolean; rowsUpdated: number; message: string }> {
+    return this.request<{ success: boolean; rowsUpdated: number; message: string }>(
+      "/conversations/merge",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          anonymousUserId: params.anonymousUserId,
+          authenticatedUserId: params.authenticatedUserId,
+        }),
+      }
+    );
+  }
+
   // Affiliate product operations
   async getAffiliateProducts(avatarId: string, includeInactive: boolean = false): Promise<AffiliateProduct[]> {
     const queryParams = includeInactive ? '?includeInactive=true' : '';

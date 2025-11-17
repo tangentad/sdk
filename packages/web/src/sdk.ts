@@ -182,6 +182,21 @@ export class TangentSDK {
   }
 
   /**
+   * Merge anonymous user's conversation history into authenticated user
+   * Called when an anonymous user signs up or logs in
+   *
+   * @param anonymousUserId - The UUID of the anonymous user
+   * @param authenticatedUserId - The user ID of the authenticated user
+   * @returns Result with number of rows updated
+   */
+  async mergeAnonymousSession(params: {
+    anonymousUserId: string;
+    authenticatedUserId: string;
+  }): Promise<{ success: boolean; rowsUpdated: number; message: string }> {
+    return this.apiClient.mergeAnonymousSession(params);
+  }
+
+  /**
    * Get all active sessions
    */
   getActiveSessions(): AvatarSessionManager[] {
