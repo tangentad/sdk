@@ -187,6 +187,12 @@ export class APIClient {
     if (request.rpmModelUrl)
       formData.append("rpmModelUrl", request.rpmModelUrl);
 
+    // Add conversation mode flags
+    if (request.enableVoice !== undefined)
+      formData.append("enableVoice", String(request.enableVoice));
+    if (request.enableVideo !== undefined)
+      formData.append("enableVideo", String(request.enableVideo));
+
     // Add complex objects as JSON strings
     if (request.personality) {
       formData.append("personality", JSON.stringify(request.personality));
